@@ -1,0 +1,12 @@
+.app_container {
+
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  .app_row{
+    height: 50vh;
+    width: 100vw;
+  }
+}
