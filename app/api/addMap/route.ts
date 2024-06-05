@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
     'SELECT * FROM maps WHERE name = ?',
     [mapName]
   )
+  // @ts-ignore
   if (existingMapName.length > 0) {
     return NextResponse.json({ msg: '地图已存在', status: 500 })
   }
@@ -21,6 +22,7 @@ export async function POST(req: NextRequest) {
     )
     return NextResponse.json({ msg: 'ok', status: 200 })
   } catch (err) {
+  // @ts-ignore
     return NextResponse.json({ msg: err.message, status: 500 })
   }
 }

@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
     [account]
   )
   console.log('existingAccount', existingAccount)
+  // @ts-ignore
   if (existingAccount.length > 0) {
     return NextResponse.json({ msg: '账号已存在', status: 500  })
   }
@@ -22,6 +23,7 @@ export async function POST(req: NextRequest) {
     [nickname]
   )
   console.log('existingNickname', existingNickname)
+  // @ts-ignore
   if (existingNickname.length > 0) {
     return NextResponse.json({ msg: '昵称已存在', status: 500 })
   }
@@ -33,6 +35,7 @@ export async function POST(req: NextRequest) {
     )
     return NextResponse.json({ msg: '注册成功', status: 200 })
   } catch (err) {
+  // @ts-ignore
     return NextResponse.json({ msg: err.message, status: 500 })
   }
 }
