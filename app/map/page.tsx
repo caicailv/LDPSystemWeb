@@ -21,7 +21,9 @@ const MapPage = () => {
 <div className="map_container">
 <div className="row">
         {list.map((item, index) => (
-          <div className='list' key={index}>{item.name}<span>({item.route_length}km)</span></div>
+          <div className='list'
+            onClick={()=>router.push('/map/detail?id='+item.id)}
+          key={index}>{item.name}<span>({item.route_length}km)</span></div>
         ))}
       </div>
 

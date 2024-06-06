@@ -28,7 +28,11 @@ const Register = () => {
 
     if (response.status === 200) {
       Toast.show({ icon: 'success', content: '注册成功！' })
+
+      localStorage.setItem('account',account)
+      localStorage.setItem('nickname',nickname)
       // router.push('/login');
+      history.go(-1)
     }
   }
 

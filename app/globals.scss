@@ -17,7 +17,10 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  // color: rgb(var(--foreground-rgb));
+  color: #000;
+  box-sizing: border-box;
+  font-size: 18px;
   // background: linear-gradient(
   //     to bottom,
   //     transparent,
