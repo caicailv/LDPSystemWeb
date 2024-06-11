@@ -10,9 +10,9 @@ const service = axios.create({
   withCredentials: true,
 })
 service.interceptors.request.use((config) => {
-  let account = localStorage.getItem('account')
-  if (account) {
-    config.headers.Authorization = account
+  let userId = localStorage.getItem('userId')
+  if (userId) {
+    config.headers.Authorization = userId
   }
   return config
 })

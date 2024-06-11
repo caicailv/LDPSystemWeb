@@ -1,4 +1,3 @@
-// app/api/register/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcrypt'
 import { pool } from '@/lib/db'
@@ -14,7 +13,7 @@ export async function POST(req: NextRequest) {
   console.log('existingAccount', existingAccount)
   // @ts-ignore
   if (existingAccount.length > 0) {
-    return NextResponse.json({ msg: '账号已存在', status: 500  })
+    return NextResponse.json({ msg: '账号已存在', status: 500 })
   }
 
   // 检查昵称是否已存在
@@ -33,9 +32,10 @@ export async function POST(req: NextRequest) {
       'INSERT INTO users (nickname, password, account) VALUES (?, ?, ?)',
       [nickname, hashedPassword, account]
     )
-    return NextResponse.json({ msg: '注册成功', status: 200 })
+    // @ts-ignore
+    return NextResponse.json({ msg: '注册成功', status: 200, data: {userId: result!.insertId} })
   } catch (err) {
-  // @ts-ignore
+    // @ts-ignore
     return NextResponse.json({ msg: err.message, status: 500 })
   }
 }

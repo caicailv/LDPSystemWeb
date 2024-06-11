@@ -28,6 +28,11 @@ body {
   //   )
   //   rgb(var(--background-start-rgb));
 }
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 @layer utilities {
   .text-balance {

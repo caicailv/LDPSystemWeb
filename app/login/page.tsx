@@ -2,11 +2,8 @@
 import React, { useState } from 'react'
 // import { useRouter } from 'next/router';
 import { Button, Input, Form, Toast } from 'antd-mobile'
-import axios from 'axios'
-import service from '@/app/api/fetch'
-import { register } from '../api/api'
-const RegisterPage = () => {
-  const [nickname, setNickname] = useState('')
+import { login, register } from '../api/api'
+const LoginPage = () => {
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
   // const [avatarUrl, setAvatarUrl] = useState('');
@@ -14,11 +11,8 @@ const RegisterPage = () => {
   // const router = useRouter();
 
   const handleSubmit = async () => {
-    if (!nickname || !account || !password) {
-      Toast.show({ icon: 'fail', content: '请填写完整信息！' })
-    }
-    const res = await register({
-      nickname,
+
+    const res = await login({
       password,
       account,
       // avatar_url: avatarUrl,
@@ -26,10 +20,10 @@ const RegisterPage = () => {
     })
 
     if (res.status === 200) {
-      Toast.show({ icon: 'success', content: '注册成功！' })
-
-      localStorage.setItem('userId', res.data.userId)
-      localStorage.setItem('nickname', nickname)
+      Toast.show({ icon: 'success', content: '登录成功！' })
+      console.log('res',res)
+      localStorage.setItem('userId', res.data.id)
+      localStorage.setItem('nickname', res.data.nickname)
       history.go(-1)
     }
   }
@@ -41,7 +35,7 @@ const RegisterPage = () => {
         onFinish={handleSubmit}
         footer={
           <Button block type="submit" color="primary" size="large">
-            注册
+            登录
           </Button>
         }
       >
@@ -52,14 +46,6 @@ const RegisterPage = () => {
             maxLength={20}
           />
         </Form.Item>
-        <Form.Item label="昵称">
-          <Input
-            value={nickname}
-            onChange={(value) => setNickname(value)}
-            maxLength={20}
-          />
-        </Form.Item>
-
         <Form.Item label="密码">
           <Input
             type="text"
@@ -68,15 +54,10 @@ const RegisterPage = () => {
             maxLength={20}
           />
         </Form.Item>
-        {/* <Form.Item label='头像 URL'>
-          <Input value={avatarUrl} onChange={(value) => setAvatarUrl(value)} />
-        </Form.Item> */}
-        {/* <Form.Item label='简介'>
-          <Input value={bio} onChange={(value) => setBio(value)} />
-        </Form.Item> */}
+      
       </Form>
     </div>
   )
 }
 
-export default RegisterPage
+export default LoginPage

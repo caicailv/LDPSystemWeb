@@ -1,23 +1,18 @@
 'use client'
-// pages/register.tsx
 import React, { useState } from 'react'
 import { Button, Input, Form, Toast, TextArea } from 'antd-mobile'
 import axios from 'axios'
 import service from '@/app/api/fetch'
+import { addMapApi } from '../api/api'
 const AddMap = () => {
   const [mapName, setMapName] = useState('')
   const [routeLength, setRouteLength] = useState('')
   const [description, setDescription] = useState('')
   const handleSubmit = async () => {
-    if (!mapName || !routeLength ) {
+    if (!mapName || !routeLength) {
       Toast.show({ icon: 'fail', content: '请填写完整信息！' })
     }
-    const response = await service.post('/addMap', {
-      mapName,
-      routeLength,
-      description,
-    })
-
+    const response = await addMapApi({ mapName, routeLength, description })
     if (response.status === 200) {
       Toast.show({ icon: 'success', content: '添加成功' })
       history.go(-1)
@@ -45,7 +40,7 @@ const AddMap = () => {
         <Form.Item label="最小长度(km)">
           <Input
             value={routeLength}
-            type='number'
+            type="number"
             onChange={(value) => setRouteLength(value)}
             maxLength={20}
           />
@@ -53,8 +48,8 @@ const AddMap = () => {
 
         <Form.Item label="描述">
           <TextArea
-            value={ description}
-            onChange={(value) =>  setDescription(value)}
+            value={description}
+            onChange={(value) => setDescription(value)}
             maxLength={20}
           />
         </Form.Item>
