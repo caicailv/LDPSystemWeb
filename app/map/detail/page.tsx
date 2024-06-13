@@ -68,7 +68,7 @@ const MapDetailPage = () => {
   )
 }
 
-export const RankTitle = ({ detail, index }: { detail: any; index: number }) => {
+ const RankTitle = ({ detail, index }: { detail: any; index: number }) => {
   return (
     <div className="flex justify-between p-[5px]">
       <div className="w-[20px]">{index + 1}</div>
