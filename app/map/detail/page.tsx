@@ -37,13 +37,12 @@ const MapDetailPage = () => {
   }, [])
   return (
     <div className="map_detail_page">
-      {/* <HeadTitle /> */}
       {list.length > 0 && (
         <Collapse defaultActiveKey={['1']}>
           {list.map((item, index) => (
             <Collapse.Panel
               key={index + ''}
-              title={<Title detail={item} index={index} />}
+              title={<RankTitle detail={item} index={index} />||null}
             >
               <div>
                 昵称:{' '}
@@ -69,7 +68,7 @@ const MapDetailPage = () => {
   )
 }
 
-export const Title = ({ detail, index }: { detail: any; index: number }) => {
+export const RankTitle = ({ detail, index }: { detail: any; index: number }) => {
   return (
     <div className="flex justify-between p-[5px]">
       <div className="w-[20px]">{index + 1}</div>
@@ -79,22 +78,22 @@ export const Title = ({ detail, index }: { detail: any; index: number }) => {
     </div>
   )
 }
-export const HeadTitle = () => {
-  return (
-    // <div className="flex">
-    //   <div className="nickname ">名次</div>
-    //   <div className="nickname ellipsis w-[30%]">昵称</div>
-    //   <div className="nickname">速度(km/h)</div>
-    //   <div className="nickname">时间</div>
-    // </div>
+// export const HeadTitle = () => {
+//   return (
+//     // <div className="flex">
+//     //   <div className="nickname ">名次</div>
+//     //   <div className="nickname ellipsis w-[30%]">昵称</div>
+//     //   <div className="nickname">速度(km/h)</div>
+//     //   <div className="nickname">时间</div>
+//     // </div>
 
-    <div className="flex justify-between p-[5px]">
-      <div className="w-[20px]">名次</div>
-      <div className="nickname ellipsis w-[35%]">昵称</div>
-      <div className="nickname ellipsis w-[20%]">速度(km/h)</div>
-      <div className="nickname ellipsis w-[30%]">时间</div>
-    </div>
-  )
-}
+//     <div className="flex justify-between p-[5px]">
+//       <div className="w-[20px]">名次</div>
+//       <div className="nickname ellipsis w-[35%]">昵称</div>
+//       <div className="nickname ellipsis w-[20%]">速度(km/h)</div>
+//       <div className="nickname ellipsis w-[30%]">时间</div>
+//     </div>
+//   )
+// }
 
 export default MapDetailPage
