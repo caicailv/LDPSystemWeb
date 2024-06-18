@@ -1,9 +1,9 @@
 import { Toast } from 'antd-mobile'
+import * as qiniu from 'qiniu-js'
 import axios from 'axios'
-
 const service = axios.create({
   baseURL: '/api',
-  timeout: 5000,
+  timeout: 50000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -29,5 +29,23 @@ service.interceptors.response.use((response) => {
     return Promise.reject(response.data)
   }
 })
+
+export const uploadFile = async (file: any,path?:string) => {
+  const formData = new FormData()
+  formData.append('file', file)
+  if(path){
+    formData.append('path', path)
+  }
+
+  const response = await service.post('/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: localStorage.getItem('userId') || '',
+    },
+  })
+  console.log('response',response);
+  return response
+}
+
 
 export default service

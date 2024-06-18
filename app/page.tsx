@@ -1,12 +1,12 @@
 'use client'
-import { Button, Input, Form, Toast, Modal } from 'antd-mobile'
+import { Button, Input, Form, Toast, Modal, ImageUploader } from 'antd-mobile'
 import Image from 'next/image'
 import './page.scss'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import UploadImgs from '@/components/uploadImgs'
 export default function Home() {
   const router = useRouter()
-
   const [nickname, setNickname] = useState('')
   const logout = () => {
     localStorage.removeItem('nickname')
@@ -35,7 +35,13 @@ export default function Home() {
       <div className="app_row p-[20px]">
         {nickname && (
           <div className="h-[30px] text-[#000] text-[18px] mb-[20px]">
-            欢迎你: <span onClick={() => router.push('/me')} className="text-[#1677ff] underline">{nickname}</span>
+            欢迎你:{' '}
+            <span
+              onClick={() => router.push('/me')}
+              className="text-[#1677ff] underline cursor-pointer"
+            >
+              {nickname}
+            </span>
           </div>
         )}
 
@@ -86,6 +92,7 @@ export default function Home() {
             退出账号
           </div>
         )}
+        <UploadImgs />
       </div>
     </div>
   )

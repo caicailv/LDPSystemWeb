@@ -23,5 +23,7 @@ export const findInfo = (data?: any) => {
   return service.post('/findInfo', data)
 }
 
+export const uploadImgToken = (data?: any) => {
+  return service.get('/uploadImgToken', data)
+}
 
-// 
