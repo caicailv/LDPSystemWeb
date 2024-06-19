@@ -13,16 +13,25 @@ const imgPath = process.env.NEXT_PUBLIC_QINIU_IMGPATH as string
 interface UploadImgsProps {
   path?: string
   count?: number
+  // 默认元素
+  defaultChildren?: JSX.Element
+  // 上传成功后的回调函数
+  onUploadSuccess?: (url: string) => void
 }
 
-const UploadImgs = ({ path, count }: UploadImgsProps) => {
+const UploadImgs = ({
+  path,
+  count,
+  defaultChildren,
+  onUploadSuccess,
+}: UploadImgsProps) => {
   const [fileList, setFileList] = useState<ImageUploadItem[]>([])
   const handleUpload = async (file: File) => {
     const file2 = await compressImage(file, 1000000)
     const response = await uploadFile(file2, path)
-    return {
-      url: `${imgPath}/${response.data.url}`,
-    }
+    const url = `${imgPath}/${response.data.url}`
+    onUploadSuccess?.(url)
+    return { url }
   }
 
   return (
@@ -32,7 +41,9 @@ const UploadImgs = ({ path, count }: UploadImgsProps) => {
       value={fileList}
       onChange={setFileList}
       upload={handleUpload}
-    />
+    >
+      {defaultChildren}
+    </ImageUploader>
   )
 }
 

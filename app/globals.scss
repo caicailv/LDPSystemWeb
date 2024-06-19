@@ -28,6 +28,10 @@ body {
   //   )
   //   rgb(var(--background-start-rgb));
 }
+img {
+  display: block;
+}
+
 .ellipsis {
   white-space: nowrap;
   overflow: hidden;

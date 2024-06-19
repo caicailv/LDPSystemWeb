@@ -22,8 +22,8 @@ export const login = (data?: any) => {
 export const findInfo = (data?: any) => {
   return service.post('/findInfo', data)
 }
-
-export const uploadImgToken = (data?: any) => {
-  return service.get('/uploadImgToken', data)
+export const updateInfo = (data?: any) => {
+  return service.post('/updateInfo', data)
 }
+
 

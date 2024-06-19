@@ -1,11 +1,20 @@
-import { isLogined, queryURLParams, tempToNumber } from '@/utils'
+'use client'
+import {
+  closeLoading,
+  isLogined,
+  openLoading,
+  queryURLParams,
+  tempToNumber,
+} from '@/utils'
 import { Button, Input, Form, Toast, Modal, Popup } from 'antd-mobile'
 import { useRouter } from 'next/navigation'
 import { PickerView } from 'antd-mobile'
 import { useState, useEffect } from 'react'
 import '../page.scss'
 import dayjs from 'dayjs'
+import UploadImgs from '@/components/uploadImgs'
 import { addMapRecord } from '@/app/api/api'
+import { url } from 'inspector'
 const getColumnsTime = () => {
   const hs = new Array(60).fill({}).map((item, index) => ({
     label: index >= 10 ? index + '' : '0' + index,
@@ -34,9 +43,9 @@ const AddRecordModal = () => {
   return (
     <div>
       {/* {isLogined() && ( */}
-        <Button block color="primary" size="large" onClick={addRecord}>
-          添加记录
-        </Button>
+      <Button block color="primary" size="large" onClick={addRecord}>
+        添加记录
+      </Button>
       {/* )} */}
       <Modal
         visible={visible}
@@ -61,16 +70,23 @@ const Content = ({ onClose }: { onClose: () => void }) => {
     if (duration === '') return Toast.show('请填写时长')
     // 使用dayjs将duration转化为毫秒数
     const durationInMs = tempToNumber(duration)
-
+    openLoading()
     const res = await addMapRecord({
       mapId: id,
       speed,
       duration: durationInMs,
     })
+    closeLoading()
+
     if (res.status === 200) {
       Toast.show('添加成功')
       onClose()
     }
+  }
+  const updateMapImg = (url: string) => {
+    // form.setFieldsValue({
+    //   mapImg: url,
+    // })
   }
   useEffect(() => {
     setSpeed('')
@@ -108,19 +124,6 @@ const Content = ({ onClose }: { onClose: () => void }) => {
         </Form.Item>
 
         <Form.Item label="时长" required>
-          {/* <Input
-            type="text"
-            value={duration}
-            onChange={(value) => setDuration(value)}
-            placeholder="hh:mm:ss"
-            disabled={true}
-            onClick={() => {
-              console.log('123')
-              setPickerViewPopupOpen(true)
-            }}
-            maxLength={20}
-          /> */}
-
           <div
             style={{
               height: '30px',
@@ -137,22 +140,14 @@ const Content = ({ onClose }: { onClose: () => void }) => {
           >
             {duration}
           </div>
-
-          {/* <div style={{ height: '20px' }}>
-            <PickerView
-              columns={getColumnsTime()}
-              mouseWheel={true}
-              style={{ '--height': '50px', }}
-              onChange={durationChange}
-            />
-          </div> */}
         </Form.Item>
-        {/* <Calendar
-          prevMonthButton={<span>上一月</span>}
-          nextMonthButton={<span>下一月</span>}
-          prevYearButton={<span>上一年</span>}
-          nextYearButton={<span>下一年</span>}
-        /> */}
+        <Form.Item label="图片" required>
+          <UploadImgs
+            count={1}
+            path="mapRecord"
+            onUploadSuccess={updateMapImg}
+          />
+        </Form.Item>
       </Form>
       <PickerViewPopup
         open={PickerViewPopupOpen}
