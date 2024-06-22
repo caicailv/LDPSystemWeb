@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcrypt'
 import { pool } from '@/lib/db'
-import { getAccount } from '@/utils'
 
 export async function POST(req: NextRequest) {
   const { userId, avatar_url, bio,gear_setup } = await req.json()

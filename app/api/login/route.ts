@@ -4,7 +4,6 @@ import { pool } from '@/lib/db'
 
 export async function POST(req: NextRequest) {
   const { password, account } = await req.json()
-  // const hashedPassword = await bcrypt.hash(password, 10)
   // 检查账号是否已存在
   const [existingAccount] = await pool.query(
     'SELECT * FROM users WHERE account = ?',

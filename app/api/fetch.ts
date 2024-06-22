@@ -33,6 +33,7 @@ service.interceptors.response.use((response) => {
 export const uploadFile = async (file: any,path?:string) => {
   const formData = new FormData()
   formData.append('file', file)
+  formData.append('name', file.name)
   if(path){
     formData.append('path', path)
   }
@@ -43,7 +44,6 @@ export const uploadFile = async (file: any,path?:string) => {
       Authorization: localStorage.getItem('userId') || '',
     },
   })
-  console.log('response',response);
   return response
 }
 

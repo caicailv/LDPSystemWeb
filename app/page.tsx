@@ -45,14 +45,14 @@ export default function Home() {
           </div>
         )}
 
-        <Button
+        {/* <Button
           block
           color="primary"
           size="large"
           onClick={() => router.push('/scoresRank')}
         >
           里程排行
-        </Button>
+        </Button> */}
         <div className="mt-[12px]">
           <Button
             block
@@ -92,7 +92,6 @@ export default function Home() {
             退出账号
           </div>
         )}
-        <UploadImgs />
       </div>
     </div>
   )

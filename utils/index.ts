@@ -1,4 +1,3 @@
-import { NextRequest, NextResponse } from 'next/server'
 
 export const queryURLParams = () => {
   if (typeof window === 'undefined') return {}
@@ -10,9 +9,7 @@ export const queryURLParams = () => {
   return params
 }
 
-export const getAccount = (req: NextRequest) => {
-  return req.headers.get('authorization') || ''
-}
+
 
 export const tempToNumber = (temp: string) => {
   const [hours, minutes, seconds] = temp.split(':').map(Number)

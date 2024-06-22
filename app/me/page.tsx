@@ -14,6 +14,7 @@ import { useAsyncEffect } from 'ahooks'
 import { SmileFill } from 'antd-mobile-icons'
 import UploadImgs from '@/components/uploadImgs'
 import './page.scss'
+import Record from './components/record'
 
 const MePage = () => {
   // let { userId } = queryURLParams()
@@ -65,7 +66,7 @@ const MePage = () => {
       return
     }
     openLoading()
-    await updateInfo({ gear_setup:gearSetup, userId })
+    await updateInfo({ gear_setup: gearSetup, userId })
     closeLoading()
     getInfo(userId)
     setGearSetup('')
@@ -83,12 +84,12 @@ const MePage = () => {
               defaultChildren={
                 info.avatar_url ? (
                   <img
-                    className="w-[60px] h-[60px]"
+                    className="w-[60px] h-[60px] overflow-hidden rounded-full"
                     src={info.avatar_url}
                     alt=""
                   />
                 ) : (
-                  <SmileFill className="w-[60px] h-[60px]" />
+                  <SmileFill className="w-[60px] h-[60px]  overflow-hidden rounded-full" />
                 )
               }
             />
@@ -97,9 +98,13 @@ const MePage = () => {
         {!isMe && (
           <div>
             {info.avatar_url ? (
-              <img className="w-[60px] h-[60px]" src={info.avatar_url} alt="" />
+              <img
+                className="w-[60px] h-[60px]  overflow-hidden rounded-full"
+                src={info.avatar_url}
+                alt=""
+              />
             ) : (
-              <SmileFill className="w-[60px] h-[60px]" />
+              <SmileFill className="w-[60px] h-[60px]  overflow-hidden rounded-full" />
             )}
           </div>
         )}
@@ -150,6 +155,12 @@ const MePage = () => {
           <Button onClick={submitGearSetup}>修改简介</Button>
         </div>
       )}
+
+      {info.mapScores && <div>
+        <div className="title text-[20px] mt-[20px]">个人成绩</div>
+        <Record recordList={info.mapScores} />
+
+      </div>   }
     </div>
   )
 }

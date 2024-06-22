@@ -4,22 +4,23 @@ import qiniu from 'qiniu'
 import { promises as fs } from 'fs'
 import path from 'path'
 import os from 'os'
-
-// const qiniu = require('qiniu');
-// const express = require('express');
-// const app = express();
-// 禁用默认的 body 解析
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
+import dayjs from 'dayjs'
 
 const accessKey = process.env.NEXT_PUBLIC_QINIU_ACCESS_KEY as string
 const secretKey = process.env.NEXT_PUBLIC_QINIU_SECRET_KEY as string
 const bucket = process.env.NEXT_PUBLIC_QINIU_BUCKET as string
 const imgPath = process.env.NEXT_PUBLIC_QINIU_IMGPATH as string
+const generateSixDigitRandomNumber = () => {
+  return Math.random().toString().substr(3, 6)+'';
+}
+// 生成唯一文件名
+const generateUniqueFileName = (originalName: string) => {
+  const timestamp = dayjs.unix(Date.now() / 1000).format('YYYYMMDDHHmmss');
 
+  const randomString = generateSixDigitRandomNumber().toString();
+  const extension = path.extname(originalName);
+  return `ccl-${timestamp}-${randomString}${extension}`;
+};
 qiniu.conf.ACCESS_KEY = accessKey
 qiniu.conf.SECRET_KEY = secretKey
 // const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
@@ -63,19 +64,20 @@ export async function POST(req: NextRequest) {
   const formData = await req.formData()
   const file = formData.get('file') as File
   const imgPath = formData.get('path') as string
+  const fileName = formData.get('name') as string
   if (!file) {
     return NextResponse.json({ status: 500, msg: 'No file uploaded' })
   }
 
   const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'upload-'))
-  const tempFilePath = path.join(tempDir, file.name)
+  const uniqueFileName = generateUniqueFileName(fileName);
+  const tempFilePath = path.join(tempDir, uniqueFileName);
+  // const tempFilePath = path.join(tempDir, file.name)
   const arrayBuffer = await file.arrayBuffer()
   await fs.writeFile(tempFilePath, Buffer.from(arrayBuffer))
 
   try {
     const result = await uploadImage(tempFilePath,imgPath)
-    console.log('result', result)
-    // await fs.unlink(tempFilePath) // 删除临时文件
     // return NextResponse.json({ success: true, data: result });
     return NextResponse.json({
       msg: 'ok',

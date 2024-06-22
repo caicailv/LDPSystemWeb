@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 import {
   closeLoading,
   isLogined,
@@ -11,10 +11,8 @@ import { useRouter } from 'next/navigation'
 import { PickerView } from 'antd-mobile'
 import { useState, useEffect } from 'react'
 import '../page.scss'
-import dayjs from 'dayjs'
 import UploadImgs from '@/components/uploadImgs'
 import { addMapRecord } from '@/app/api/api'
-import { url } from 'inspector'
 const getColumnsTime = () => {
   const hs = new Array(60).fill({}).map((item, index) => ({
     label: index >= 10 ? index + '' : '0' + index,
@@ -24,14 +22,14 @@ const getColumnsTime = () => {
   const timeArr = [hs, hs, hs]
   return timeArr
 }
-const AddRecordModal = () => {
+const AddRecordModal = ({ update }: { update: () => void }) => {
   const router = useRouter()
   const { id } = queryURLParams()
   const [visible, setVisible] = useState(false)
   const [form] = Form.useForm()
   const addRecord = () => {
-    const account = localStorage.getItem('userId')
-    if (!account) {
+    const userId = localStorage.getItem('userId')
+    if (!userId) {
       Toast.show('请先登录')
       setTimeout(() => {
         router.push('/')
@@ -39,9 +37,11 @@ const AddRecordModal = () => {
       return
     }
     setVisible(true)
+    update()
   }
   return (
     <div>
+      <p className='text-center mb-[10px]'>排行按照运动总时间倒序排列</p>
       {/* {isLogined() && ( */}
       <Button block color="primary" size="large" onClick={addRecord}>
         添加记录
@@ -61,13 +61,16 @@ const Content = ({ onClose }: { onClose: () => void }) => {
   const [PickerViewPopupOpen, setPickerViewPopupOpen] = useState(false)
   const [speed, setSpeed] = useState('')
   const [duration, setDuration] = useState('')
+  const [recordImg, setRecordImg] = useState('')
   const durationChange = (value: any) => {
     setPickerViewPopupOpen(false)
     setDuration(value)
   }
   const handleSubmit = async () => {
     if (speed === '') return Toast.show('请填写速度')
+    console.log('speed', speed)
     if (duration === '') return Toast.show('请填写时长')
+    if (recordImg === '') return Toast.show('请上传截图')
     // 使用dayjs将duration转化为毫秒数
     const durationInMs = tempToNumber(duration)
     openLoading()
@@ -75,6 +78,7 @@ const Content = ({ onClose }: { onClose: () => void }) => {
       mapId: id,
       speed,
       duration: durationInMs,
+      record_img_url: recordImg,
     })
     closeLoading()
 
@@ -83,14 +87,10 @@ const Content = ({ onClose }: { onClose: () => void }) => {
       onClose()
     }
   }
-  const updateMapImg = (url: string) => {
-    // form.setFieldsValue({
-    //   mapImg: url,
-    // })
-  }
   useEffect(() => {
     setSpeed('')
     setDuration('')
+    setRecordImg('')
   }, [])
   return (
     <div className="add-record-modal">
@@ -145,7 +145,7 @@ const Content = ({ onClose }: { onClose: () => void }) => {
           <UploadImgs
             count={1}
             path="mapRecord"
-            onUploadSuccess={updateMapImg}
+            onUploadSuccess={(url) => setRecordImg(url)}
           />
         </Form.Item>
       </Form>

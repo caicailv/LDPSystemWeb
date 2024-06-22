@@ -28,6 +28,7 @@ const UploadImgs = ({
   const [fileList, setFileList] = useState<ImageUploadItem[]>([])
   const handleUpload = async (file: File) => {
     const file2 = await compressImage(file, 1000000)
+    console.log('file2',file2)
     const response = await uploadFile(file2, path)
     const url = `${imgPath}/${response.data.url}`
     onUploadSuccess?.(url)

@@ -1,4 +1,4 @@
-.headpic{
+.headpic {
   overflow: hidden;
   width: 60px;
   height: 60px;
@@ -6,4 +6,25 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+}
+
+.list_row {
+  border: 1px solid #f0f0f0;
+  .list_item {
+    display: flex;
+    height: 45px;
+    font-size: 16px;
+    align-items: center;
+    padding: 0 10px;
+    justify-content: space-between;
+    padding-left: 20px;
+    .list_item_left {
+      & + .list_item_left {
+        border-left: 1px solid #f0f0f0;
+      }
+    }
+    & + .list_item {
+      border-top: 1px solid #f0f0f0;
+    }
+  }
 }
