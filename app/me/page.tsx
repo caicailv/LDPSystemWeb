@@ -130,7 +130,7 @@ const MePage = () => {
             value={bio}
             onChange={(e) => setBio(e)}
           />
-          <Button onClick={submitBio}>修改简介</Button>
+          <Button onClick={submitBio}>更新简介</Button>
         </div>
       )}
 
@@ -152,15 +152,16 @@ const MePage = () => {
             value={gearSetup}
             onChange={(e) => setGearSetup(e)}
           />
-          <Button onClick={submitGearSetup}>修改简介</Button>
+          <Button onClick={submitGearSetup}>更新装备信息</Button>
         </div>
       )}
 
-      {info.mapScores && <div>
-        <div className="title text-[20px] mt-[20px]">个人成绩</div>
-        <Record recordList={info.mapScores} />
-
-      </div>   }
+      {info.mapScores?.length ? (
+        <div>
+          <div className="title text-[20px] mt-[20px]">个人成绩</div>
+          <Record recordList={info.mapScores} />
+        </div>
+      ) : null}
     </div>
   )
 }
