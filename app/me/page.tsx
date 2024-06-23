@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import {
   closeLoading,
-  numberToTemp,
   openLoading,
   queryURLParams,
 } from '@/utils'
@@ -15,6 +14,8 @@ import { SmileFill } from 'antd-mobile-icons'
 import UploadImgs from '@/components/uploadImgs'
 import './page.scss'
 import Record from './components/record'
+import BaseInfo from './components/baseInfo'
+import EditBaseInfo from './components/editBaseInfo'
 
 const MePage = () => {
   // let { userId } = queryURLParams()
@@ -111,11 +112,20 @@ const MePage = () => {
 
         <div className="nickname ml-[20px] text-[20px]">{info.nickname}</div>
       </div>
+      <div className="title text-[20px] mt-[20px]">基础信息</div>
 
-      <div className="bio">
+      <div className="mt-[10px] ml-[10px]">
+        <BaseInfo detail={info} />
+      </div>
+      {isMe && (
+        <div className="mt-[10px] ml-[10px]">
+          <EditBaseInfo onUpdate={() => getInfo(userId)} detail={info} userId={userId} />
+        </div>
+      )}
+      <div className="bio ">
         <div className="title text-[20px] mt-[20px]">个人简介</div>
         <div
-          className="content text-[16px] mt-[5px] mb-[5px] text-wrap"
+          className="content text-[16px] mt-[5px] mb-[5px] text-wrap ml-[10px]"
           style={{ wordBreak: 'break-word' }}
         >
           {info.bio || '暂无简介'}
@@ -123,21 +133,21 @@ const MePage = () => {
       </div>
 
       {isMe && (
-        <div className="border-[1px] border-solid border-gray-200 p-[10px]">
+        <div className="border-[1px] border-solid border-gray-200 p-[10px]  ml-[10px]">
           <TextArea
             rows={4}
             placeholder="请输入个人简介"
             value={bio}
             onChange={(e) => setBio(e)}
           />
-          <Button onClick={submitBio}>更新简介</Button>
+          <Button  color='primary' onClick={submitBio}>更新简介</Button>
         </div>
       )}
 
       <div className="bio">
         <div className="title text-[20px] mt-[20px]">个人装备</div>
         <div
-          className="content text-[16px] mt-[5px] mb-[5px] text-wrap"
+          className="  ml-[10px] content text-[16px] mt-[5px] mb-[5px] text-wrap"
           style={{ wordBreak: 'break-word' }}
         >
           {info.gear_setup || '暂未添加装备'}
@@ -145,21 +155,25 @@ const MePage = () => {
       </div>
 
       {isMe && (
-        <div className="border-[1px] border-solid border-gray-200 p-[10px]">
+        <div className="border-[1px] border-solid border-gray-200 p-[10px]  ml-[10px]">
           <TextArea
             rows={4}
             placeholder="请输入个人板子配置"
             value={gearSetup}
             onChange={(e) => setGearSetup(e)}
           />
-          <Button onClick={submitGearSetup}>更新装备信息</Button>
+          <Button  color='primary' onClick={submitGearSetup}>更新装备信息</Button>
         </div>
       )}
 
       {info.mapScores?.length ? (
         <div>
           <div className="title text-[20px] mt-[20px]">个人成绩</div>
+          <div className=' ml-[10px]'>
           <Record recordList={info.mapScores} />
+
+
+          </div>
         </div>
       ) : null}
     </div>

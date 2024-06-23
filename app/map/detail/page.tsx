@@ -52,7 +52,7 @@ const MapDetailPage = () => {
             >
               <div>
                 昵称:{' '}
-                <span className="text-[#1677ff] underline">
+                <span className="text-[#1677ff] underline" onClick={() => router.push(`/me?userId=${item.user_id}`)}>
                   {item.nickname}
                 </span>
               </div>

@@ -3,7 +3,8 @@ import bcrypt from 'bcrypt'
 import { pool } from '@/lib/db'
 
 export async function POST(req: NextRequest) {
-  const { userId, avatar_url, bio,gear_setup } = await req.json()
+  const { userId, avatar_url, bio, gear_setup, height, weight, age, region } =
+    await req.json()
 
   //   if (req.method === 'PUT') {
 
@@ -14,30 +15,48 @@ export async function POST(req: NextRequest) {
     sql += ' avatar_url = ?,'
     values.push(avatar_url)
   }
-  
+
   if (gear_setup !== undefined) {
     sql += ' gear_setup = ?,'
     values.push(gear_setup)
   }
-  
+
   if (bio !== undefined) {
     sql += ' bio = ?,'
     values.push(bio)
+  }
+
+  if (weight) {
+    sql += ' weight = ?,'
+    values.push(weight)
+  }
+
+  if (height) {
+    sql += ' height = ?,'
+    values.push(height)
+  }
+  if (region) {
+    sql += ' region = ?,'
+    values.push(region)
+  }
+  if (age) {
+    sql += ' age = ?,'
+    values.push(age)
   }
   // 移除末尾的逗号
   sql = sql.slice(0, -1)
   sql += ' WHERE id = ?'
   values.push(userId)
-  console.log('sql',sql);
-  console.log('values',values);
+  console.log('sql', sql)
+  console.log('values', values)
   try {
-     await pool.execute(sql, values)
+    await pool.execute(sql, values)
     // res.status(200).json({ message: 'User information updated successfully' });
-    return NextResponse.json({ msg: 'success', status: 200, })
+    return NextResponse.json({ msg: 'success', status: 200 })
   } catch (error) {
     console.error('Error updating user information:', error)
     // res.status(500).json({ error: 'Failed to update user information' });
-    return NextResponse.json({ msg: 'error', status: 200, data: error })
+    return NextResponse.json({ msg: 'error', status: 500, data: error })
   }
   // } else {
   //     res.status(405).json({ error: 'Method not allowed' });

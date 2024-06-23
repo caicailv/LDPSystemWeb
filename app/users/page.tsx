@@ -9,18 +9,15 @@ import service from '../api/fetch'
 import './page.scss'
 import { getMapList } from '../api/api'
 import { closeLoading, isLogined, openLoading } from '@/utils'
-const MapPage = () => {
+const UsersPage = () => {
   const router = useRouter()
   const [list, setList] = useState<any[]>([])
-  // useAsyncEffect(async () => {
-  // }, [])
   const getData =async ()=>{
     openLoading()
     const res = await getMapList()
     console.log('res.data',res.data)
     setList(res.data)
     closeLoading()
-  
   }
   useEffect(() => {
     getData()
@@ -58,4 +55,4 @@ const MapPage = () => {
   )
 }
 
-export default MapPage
+export default UsersPage

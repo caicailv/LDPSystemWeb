@@ -63,6 +63,16 @@ export default function Home() {
             地图排行
           </Button>
         </div>
+        <div className="mt-[12px]">
+          <Button
+            block
+            color="primary"
+            size="large"
+            onClick={() => router.push('/users')}
+          >
+            滑手列表
+          </Button>
+        </div>
         {!nickname && (
           <>
             <div className="mt-[12px]">
