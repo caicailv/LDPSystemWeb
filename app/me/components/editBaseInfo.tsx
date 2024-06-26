@@ -1,6 +1,14 @@
 import dayjs from 'dayjs'
 import '../page.scss'
-import { Button, Input, Form, Toast, TextArea, Cascader } from 'antd-mobile'
+import {
+  Button,
+  Input,
+  Form,
+  Toast,
+  TextArea,
+  Cascader,
+  Radio,
+} from 'antd-mobile'
 import React, { useEffect, useState } from 'react'
 import ChoiceCountry from '@/components/choiceCountry'
 import { updateInfo } from '@/app/api/api'
@@ -15,13 +23,14 @@ const EditBaseInfo = ({
   onUpdate: () => void
 }) => {
   const [height, setHeight] = useState('')
+  const [gender, setGender] = useState<any>(null)
   const [weight, setWeight] = useState('')
   const [age, setAge] = useState('')
   const [region, setRegion] = useState('')
   const handleSubmit = async () => {
-    if (!height && !weight && !age && !region) return
+    if (!height && !weight && !age && !region && !gender) return
     setVisible(false)
-    await updateInfo({ height, weight, age, region, userId })
+    await updateInfo({ height, weight, age, region, userId, gender })
     Toast.show('更新成功')
     setVisible(false)
     onUpdate()
@@ -29,6 +38,7 @@ const EditBaseInfo = ({
   const [visible, setVisible] = useState(false)
   useEffect(() => {
     setHeight(detail.height || '')
+    setWeight(detail.gender || null)
     setWeight(detail.weight || '')
     setAge(detail.age || '')
     setRegion(detail.region || '')
@@ -42,6 +52,15 @@ const EditBaseInfo = ({
       )}
       {visible && (
         <div className="base_info">
+          <div className="li">
+            <Radio.Group onChange={(e) => setGender(e)} value={gender}>
+              <Radio value={1}>男</Radio>
+              <div className="ml-[15px]">
+                {' '}
+                <Radio value={2}>女</Radio>
+              </div>
+            </Radio.Group>
+          </div>
           <div className="li">
             <Input
               placeholder="身高"

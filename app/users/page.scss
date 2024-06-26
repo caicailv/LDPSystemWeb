@@ -1,6 +1,14 @@
-.map_container {
+.user_container {
   padding: 20px;
-
+  .user_item {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    & + .user_item {
+      border-top: 1px solid #e0e0e0;
+    }
+  }
   .row {
     display: flex;
     flex-wrap: wrap;

@@ -3,7 +3,6 @@ import { ImageUploader } from 'antd-mobile'
 import { useState } from 'react'
 
 import { ImageUploadItem } from 'antd-mobile/es/components/image-uploader'
-import { useAsyncEffect } from 'ahooks'
 import { uploadFile } from '@/app/api/fetch'
 
 import '@/app/api/fetch'
@@ -30,7 +29,7 @@ const UploadImgs = ({
     const file2 = await compressImage(file, 1000000)
     console.log('file2',file2)
     const response = await uploadFile(file2, path)
-    const url = `${imgPath}/${response.data.url}`
+    const url = `${response.data.url}`
     onUploadSuccess?.(url)
     return { url }
   }

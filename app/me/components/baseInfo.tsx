@@ -7,6 +7,12 @@ const BaseInfo = ({ detail }: { detail: any }) => {
     <div>
       <div className="base-info">
         <div className="li">
+          <span className="label">性别：</span>
+          <span className="value">
+            {detail.gender ? `${['', '男', '女'][detail.gender]}` : '--'}
+          </span>
+        </div>
+        <div className="li">
           <span className="label">身高：</span>
           <span className="value">
             {detail.height ? `${detail.height}cm` : '--'}

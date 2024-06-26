@@ -3,8 +3,18 @@ import bcrypt from 'bcrypt'
 import { pool } from '@/lib/db'
 
 export async function POST(req: NextRequest) {
-  const { userId, avatar_url, bio, gear_setup, height, weight, age, region } =
-    await req.json()
+  const {
+    userId,
+    avatar_url,
+    bio,
+    gear_setup,
+    height,
+    weight,
+    age,
+    region,
+    gender,
+    gear_setup_img,
+  } = await req.json()
 
   //   if (req.method === 'PUT') {
 
@@ -43,12 +53,20 @@ export async function POST(req: NextRequest) {
     sql += ' age = ?,'
     values.push(age)
   }
+  if (gender) {
+    sql += ' gender = ?,'
+    values.push(gender)
+  }
+  if (gear_setup_img) {
+    sql += ' gear_setup_img = ?,'
+    values.push(gear_setup_img)
+  }
+
   // 移除末尾的逗号
   sql = sql.slice(0, -1)
   sql += ' WHERE id = ?'
   values.push(userId)
-  console.log('sql', sql)
-  console.log('values', values)
+
   try {
     await pool.execute(sql, values)
     // res.status(200).json({ message: 'User information updated successfully' });

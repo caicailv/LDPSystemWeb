@@ -16,6 +16,7 @@ import './page.scss'
 import Record from './components/record'
 import BaseInfo from './components/baseInfo'
 import EditBaseInfo from './components/editBaseInfo'
+import GearSetup from './components/gearSetup'
 
 const MePage = () => {
   // let { userId } = queryURLParams()
@@ -142,29 +143,7 @@ const MePage = () => {
           <Button  color='primary' onClick={submitBio}>更新简介</Button>
         </div>
       )}
-
-      <div className="bio">
-        <div className="title text-[20px] mt-[20px]">个人装备</div>
-        <div
-          className="  ml-[10px] content text-[16px] mt-[5px] mb-[5px] text-wrap"
-          style={{ wordBreak: 'break-word' }}
-        >
-          {info.gear_setup || '暂未添加装备'}
-        </div>
-      </div>
-
-      {isMe && (
-        <div className="border-[1px] border-solid border-gray-200 p-[10px]  ml-[10px]">
-          <TextArea
-            rows={4}
-            placeholder="请输入个人板子配置"
-            value={gearSetup}
-            onChange={(e) => setGearSetup(e)}
-          />
-          <Button  color='primary' onClick={submitGearSetup}>更新装备信息</Button>
-        </div>
-      )}
-
+  <GearSetup info={info} userId={userId} isMe={isMe} update={()=>{getInfo(userId)}} />
       {info.mapScores?.length ? (
         <div>
           <div className="title text-[20px] mt-[20px]">个人成绩</div>

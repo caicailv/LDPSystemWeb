@@ -43,3 +43,16 @@ img {
     text-wrap: balance;
   }
 }
+
+// adm-image-uploader-cell adm-image-uploader-upload-button
+.adm-image-uploader-upload-button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.adm-image-uploader-upload-button-icon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

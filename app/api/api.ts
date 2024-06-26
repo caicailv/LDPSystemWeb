@@ -27,3 +27,8 @@ export const updateInfo = (data?: any) => {
 }
 
 
+export const getUsers = (data?: any) => {
+  return service.post('/getUsers', data)
+}
+
+
