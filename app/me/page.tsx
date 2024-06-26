@@ -23,7 +23,6 @@ const MePage = () => {
   const [info, setInfo] = useState<any>({})
   const [bio, setBio] = useState('')
   const [gearSetup, setGearSetup] = useState('')
-
   const [isMe, setIsMe] = useState(false)
   const getInfo = async (userId: string) => {
     openLoading()
