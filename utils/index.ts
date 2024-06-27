@@ -1,4 +1,12 @@
-
+import dayjs from 'dayjs'
+import da from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+import duration from 'dayjs/plugin/duration';
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.extend(duration);
+export { dayjs }
 export const queryURLParams = () => {
   if (typeof window === 'undefined') return {}
   const urlParams = new URLSearchParams(window.location.search)
@@ -8,8 +16,6 @@ export const queryURLParams = () => {
   })
   return params
 }
-
-
 
 export const tempToNumber = (temp: string) => {
   const [hours, minutes, seconds] = temp.split(':').map(Number)
@@ -30,5 +36,8 @@ export const numberToTemp = (number: number) => {
 export { openLoading, closeLoading } from './loading'
 
 export const isLogined = () => {
-  return typeof window!== 'undefined' && window.localStorage.getItem('userId')
+  return typeof window !== 'undefined' && window.localStorage.getItem('userId')
 }
+export const formatDate = (date: string, format: string = 'YYYY-MM-DD HH:mm:ss') => {
+  return dayjs(date).add(dayjs.duration(8, 'hours')).format(format);
+};

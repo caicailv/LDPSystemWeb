@@ -59,7 +59,6 @@ const AddRecordModal = ({ update }: { update: () => void }) => {
 const Content = ({ onClose }: { onClose: () => void }) => {
   const { id } = queryURLParams()
   const [PickerViewPopupOpen, setPickerViewPopupOpen] = useState(false)
-  const [speed, setSpeed] = useState('')
   const [duration, setDuration] = useState('')
   const [recordImg, setRecordImg] = useState('')
   const durationChange = (value: any) => {
@@ -67,8 +66,6 @@ const Content = ({ onClose }: { onClose: () => void }) => {
     setDuration(value)
   }
   const handleSubmit = async () => {
-    if (speed === '') return Toast.show('请填写速度')
-    console.log('speed', speed)
     if (duration === '') return Toast.show('请填写时长')
     if (recordImg === '') return Toast.show('请上传截图')
     // 使用dayjs将duration转化为毫秒数
@@ -76,7 +73,6 @@ const Content = ({ onClose }: { onClose: () => void }) => {
     openLoading()
     const res = await addMapRecord({
       mapId: id,
-      speed,
       duration: durationInMs,
       record_img_url: recordImg,
     })
@@ -88,7 +84,6 @@ const Content = ({ onClose }: { onClose: () => void }) => {
     }
   }
   useEffect(() => {
-    setSpeed('')
     setDuration('')
     setRecordImg('')
   }, [])
@@ -114,15 +109,6 @@ const Content = ({ onClose }: { onClose: () => void }) => {
           </>
         }
       >
-        <Form.Item label="匀速(km/h)" required>
-          <Input
-            value={speed}
-            onChange={(value) => setSpeed(value)}
-            maxLength={20}
-            type="number"
-          />
-        </Form.Item>
-
         <Form.Item label="时长" required>
           <div
             style={{

@@ -1,6 +1,7 @@
 'use client'
 import {
   closeLoading,
+  formatDate,
   numberToTemp,
   openLoading,
   queryURLParams,
@@ -12,7 +13,7 @@ import AddRecordModal from './components/addRecordModal'
 import { useEffect, useState } from 'react'
 import { useAsyncEffect } from 'ahooks'
 import { getMapRecordList } from '@/app/api/api'
-import dayjs from 'dayjs'
+// import dayjs from 'dayjs'
 const MapDetailPage = () => {
   const router = useRouter()
   const [list, setList] = useState<any[]>([])
@@ -30,7 +31,7 @@ const MapDetailPage = () => {
       return {
         ...item,
         duration: numberToTemp(item.duration),
-        created_at: dayjs(item.created_at).format('YYYY-MM-DD HH:mm'),
+        created_at: formatDate(item.created_at)
       }
     })
     setList(data2)
