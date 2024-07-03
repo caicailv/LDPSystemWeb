@@ -6,7 +6,7 @@ import {
   openLoading,
   queryURLParams,
 } from '@/utils'
-import { Collapse,ImageViewer } from 'antd-mobile'
+import { Collapse, ImageViewer } from 'antd-mobile'
 import { useRouter } from 'next/navigation'
 import './page.scss'
 import AddRecordModal from './components/addRecordModal'
@@ -15,7 +15,7 @@ import { useAsyncEffect } from 'ahooks'
 import { getMapRecordList } from '@/app/api/api'
 // import dayjs from 'dayjs'
 const MapDetailPage = () => {
-  const { id,name: mapName } = queryURLParams()
+  const { id, name: mapName } = queryURLParams()
 
   const router = useRouter()
   const [list, setList] = useState<any[]>([])
@@ -26,14 +26,14 @@ const MapDetailPage = () => {
     setImgVisible(true)
   }
   const getData = async () => {
-    const { id,name: mapName } = queryURLParams()
+    const { id, name: mapName } = queryURLParams()
     openLoading()
     const res = await getMapRecordList({ mapId: id })
     const data2 = (res.data || []).map((item: any) => {
       return {
         ...item,
         duration: numberToTemp(item.duration),
-        created_at: formatDate(item.created_at)
+        created_at: formatDate(item.created_at),
       }
     })
     setList(data2)
@@ -46,27 +46,35 @@ const MapDetailPage = () => {
   }, [])
   return (
     <div className="map_detail_page">
-      <div className='text-center flex items-center h-[50px] justify-center text-[20px] mb-[20px]'>{mapName}排行榜</div>
+      <div className="text-center flex items-center h-[50px] justify-center text-[20px] mb-[20px]">
+        {mapName && <span>{mapName}排行榜</span>}
+      </div>
 
       {list.length > 0 && (
         <Collapse defaultActiveKey={['1']}>
           {list.map((item, index) => (
             <Collapse.Panel
               key={index + ''}
-              title={<RankTitle detail={item} index={index} />||null}
+              title={<RankTitle detail={item} index={index} /> || null}
             >
               <div>
                 昵称:{' '}
-                <span className="text-[#1677ff] underline" onClick={() => router.push(`/me?userId=${item.user_id}`)}>
+                <span
+                  className="text-[#1677ff] underline"
+                  onClick={() => router.push(`/me?userId=${item.user_id}`)}
+                >
                   {item.nickname}
                 </span>
               </div>
               <div>速度: {item.speed}km/h</div>
               <div>用时: {item.duration}</div>
               <div>提交时间: {item.created_at}</div>
-              <span className="text-[#1677ff] underline" onClick={() => openImageViewer(item.record_img_url)}>
-                 查看截图
-                </span>
+              <span
+                className="text-[#1677ff] underline"
+                onClick={() => openImageViewer(item.record_img_url)}
+              >
+                查看截图
+              </span>
               {/* ImageViewer */}
             </Collapse.Panel>
           ))}
@@ -79,12 +87,16 @@ const MapDetailPage = () => {
         <div className="mt-[20px]"></div>
         <AddRecordModal update={getData} />
       </div>
-      <ImageViewer visible={ imgVisible }  image={imgurl} onClose={() => setImgVisible(false)} />
+      <ImageViewer
+        visible={imgVisible}
+        image={imgurl}
+        onClose={() => setImgVisible(false)}
+      />
     </div>
   )
 }
 
- const RankTitle = ({ detail, index }: { detail: any; index: number }) => {
+const RankTitle = ({ detail, index }: { detail: any; index: number }) => {
   return (
     <div className="flex justify-between p-[5px]">
       <div className="w-[5px]">{index + 1}</div>
