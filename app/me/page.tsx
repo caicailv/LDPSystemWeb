@@ -1,10 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import {
-  closeLoading,
-  openLoading,
-  queryURLParams,
-} from '@/utils'
+import { closeLoading, openLoading, queryURLParams } from '@/utils'
 import { Button, Input, Form, Toast, TextArea } from 'antd-mobile'
 import axios from 'axios'
 import service from '@/app/api/fetch'
@@ -17,6 +13,7 @@ import Record from './components/record'
 import BaseInfo from './components/baseInfo'
 import EditBaseInfo from './components/editBaseInfo'
 import GearSetup from './components/gearSetup'
+import Bio from './components/bio'
 
 const MePage = () => {
   // let { userId } = queryURLParams()
@@ -119,10 +116,14 @@ const MePage = () => {
       </div>
       {isMe && (
         <div className="mt-[10px] ml-[10px]">
-          <EditBaseInfo onUpdate={() => getInfo(userId)} detail={info} userId={userId} />
+          <EditBaseInfo
+            onUpdate={() => getInfo(userId)}
+            detail={info}
+            userId={userId}
+          />
         </div>
       )}
-      <div className="bio ">
+      {/* <div className="bio ">
         <div className="title text-[20px] mt-[20px]">个人简介</div>
         <div
           className="content text-[16px] mt-[5px] mb-[5px] text-wrap ml-[10px]"
@@ -140,17 +141,34 @@ const MePage = () => {
             value={bio}
             onChange={(e) => setBio(e)}
           />
-          <Button  color='primary' onClick={submitBio}>更新简介</Button>
+          <Button color="primary" onClick={submitBio}>
+            更新简介
+          </Button>
         </div>
-      )}
-  <GearSetup info={info} userId={userId} isMe={isMe} update={()=>{getInfo(userId)}} />
+      )} */}
+
+      <Bio
+        info={info}
+        userId={userId}
+        isMe={isMe}
+        update={() => {
+          getInfo(userId)
+        }}
+      />
+      <GearSetup
+        info={info}
+        userId={userId}
+        isMe={isMe}
+        update={() => {
+          getInfo(userId)
+        }}
+      />
+
       {info.mapScores?.length ? (
         <div>
           <div className="title text-[20px] mt-[20px]">个人成绩</div>
-          <div className=' ml-[10px]'>
-          <Record recordList={info.mapScores} />
-
-
+          <div className=" ml-[10px]">
+            <Record recordList={info.mapScores} />
           </div>
         </div>
       ) : null}

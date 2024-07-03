@@ -33,6 +33,10 @@ export default function Home() {
   return (
     <div className="app_container">
       <div className="app_row p-[20px]">
+      <div className="h-[30px] text-[#000] text-center text-[18px] mt-[-50px] mb-[50px]">
+        GO2SKATE ldp排位系统
+      </div>
+
         {nickname && (
           <div className="h-[30px] text-[#000] text-[18px] mb-[20px]">
             欢迎你:{' '}

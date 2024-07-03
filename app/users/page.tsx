@@ -1,5 +1,5 @@
 'use client'
-import { Collapse, ImageViewer } from 'antd-mobile'
+import { Collapse, ImageViewer, Modal } from 'antd-mobile'
 
 import { useRouter } from 'next/navigation'
 import { Button, Input, Form, Toast } from 'antd-mobile'
@@ -24,9 +24,22 @@ const UsersPage = () => {
   useEffect(() => {
     getData()
   }, [])
-  const openImageViewer = (url: string) => {
-    setImgurl(url)
-    setImgVisible(true)
+  const openImageViewer = (item: any) => {
+    if (item.gear_setup_img) {
+      setImgurl(item.gear_setup_img)
+      setImgVisible(true)
+      return
+    }
+    if (item.gear_setup) {
+      Modal.show({
+        title: '装备信息',
+        content: <div>{item.gear_setup}</div>,
+      })
+    }
+
+    return Toast.show('暂无装备信息')
+
+    // gear_setup_img
   }
   return (
     <div>
@@ -40,13 +53,13 @@ const UsersPage = () => {
               {item.nickname}
             </div>
             <div className="img text-[#1677ff] ellipsis text-center  w-[20%]">
-              {item.gear_setup_img && (
-                <div onClick={() => openImageViewer(item.gear_setup_img)}>
-                  查看装备
-                </div>
-              )}
+              {item.gear_setup_img || item.gear_setup ? (
+                <div onClick={() => openImageViewer(item)}>查看装备</div>
+              ) : null}
             </div>
-            <div className="region ml-[20px] w-[20%] text-center">{item.region}</div>
+            <div className="region ml-[20px] w-[20%] text-center">
+              {item.region}
+            </div>
           </div>
         ))}
       </div>

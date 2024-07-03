@@ -11,7 +11,6 @@ const LoginPage = () => {
   // const router = useRouter();
 
   const handleSubmit = async () => {
-
     const res = await login({
       password,
       account,
@@ -21,7 +20,7 @@ const LoginPage = () => {
 
     if (res.status === 200) {
       Toast.show({ icon: 'success', content: '登录成功！' })
-      console.log('res',res)
+      console.log('res', res)
       localStorage.setItem('userId', res.data.id)
       localStorage.setItem('nickname', res.data.nickname)
       history.go(-1)
@@ -34,9 +33,12 @@ const LoginPage = () => {
         layout="horizontal"
         onFinish={handleSubmit}
         footer={
-          <Button block type="submit" color="primary" size="large">
-            登录
-          </Button>
+          <div>
+            <Button block type="submit" color="primary" size="large">
+              登录
+            </Button>
+            <div className='text-center' onClick={() => Toast.show({ content: '开发中' })} style={{ marginTop: '10px' }}>忘记密码</div>
+          </div>
         }
       >
         <Form.Item label="账号/邮箱">
@@ -54,7 +56,6 @@ const LoginPage = () => {
             maxLength={20}
           />
         </Form.Item>
-      
       </Form>
     </div>
   )

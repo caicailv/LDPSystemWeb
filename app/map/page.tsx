@@ -1,4 +1,7 @@
-"use client";
+'use client'
+import dynamic from 'next/dynamic';
+
+
 
 import { useRouter } from 'next/navigation'
 import { Button, Input, Form, Toast } from 'antd-mobile'
@@ -14,22 +17,24 @@ const MapPage = () => {
   const [list, setList] = useState<any[]>([])
   // useAsyncEffect(async () => {
   // }, [])
-  const getData =async ()=>{
+  const getData = async () => {
     openLoading()
     const res = await getMapList()
-    console.log('res.data',res.data)
+    
+    console.log('res.data', res.data)
     setList(res.data)
     closeLoading()
-  
   }
   useEffect(() => {
     getData()
-  },[])
+  }, [])
 
   return (
     <div>
       <div className="map_container">
         <div className="row">
+          {list.length === 0 && <div className="loading"></div>}
+
           {list.map((item, index) => (
             <div
               className="list"
@@ -58,4 +63,5 @@ const MapPage = () => {
   )
 }
 
-export default MapPage
+export default  dynamic(() => Promise.resolve(MapPage), { ssr: false });
+

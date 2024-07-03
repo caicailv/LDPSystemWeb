@@ -16,43 +16,39 @@ interface Props {
   update: () => void
 }
 
-const GearSetup = ({ info, isMe, userId, update }: Props) => {
-  const [gearSetup, setGearSetup] = useState('')
-  const [gearSetupImg, setGearSetupImg] = useState('')
-  const [imgVisible, setImgVisible] = useState(false)
+const Bio = ({ info, isMe, userId, update }: Props) => {
+  const [bio, setBoi] = useState('')
+  // const [gearSetupImg, setGearSetupImg] = useState('')
+  // const [imgVisible, setImgVisible] = useState(false)
   const submitGearSetup = async () => {
-    if (!gearSetup && !gearSetupImg) {
+    if (!bio) {
       Toast.show('请输入')
       return
     }
     openLoading()
-    await updateInfo({
-      gear_setup: gearSetup || undefined,
-      gear_setup_img: gearSetupImg || undefined,
-      userId,
-    })
+    await updateInfo({ bio: bio, userId })
     closeLoading()
-    // getInfo(userId)
-    setGearSetup('')
+    setBoi('')
     update()
   }
-  useEffect(()=>{
-    if(info.gear_setup){
-      setGearSetup(info.gear_setup)
+  useEffect(() => {
+    console.log('info.bio',info.bio)
+    if (info.bio) {
+      setBoi(info.bio)
     }
-  },[info])
+  }, [info])
 
   return (
     <>
       <div className="bio">
-        <div className="title text-[20px] mt-[20px]">个人装备</div>
+        <div className="title text-[20px] mt-[20px]">个人简介</div>
         <div
           className="  ml-[10px] content text-[16px] mt-[5px] mb-[5px] text-wrap"
-          style={{ wordBreak: 'break-word',whiteSpace: `break-spaces` }}
+          style={{ wordBreak: 'break-word', whiteSpace: `break-spaces` }}
         >
-          {info.gear_setup || '暂未添加装备'}
+          {info.bio || '暂未添加简介'}
         </div>
-        {info.gear_setup_img && (
+        {/* {info.gear_setup_img && (
           <Image
             src={info.gear_setup_img}
             width={100}
@@ -60,25 +56,25 @@ const GearSetup = ({ info, isMe, userId, update }: Props) => {
             fit="scale-down"
             onClick={() => setImgVisible(true)}
             alt=""
-            className='mb-[10px]'
+            className="mb-[10px]"
           />
-        )}
+        )} */}
       </div>
-      <ImageViewer
+      {/* <ImageViewer
         visible={imgVisible}
         image={info.gear_setup_img}
         onClose={() => setImgVisible(false)}
-      />
+      /> */}
 
       {isMe && (
         <div className="border-[1px] border-solid border-gray-200 p-[10px]  ml-[10px]">
           <TextArea
             rows={4}
-            placeholder="请输入个人板子配置"
-            value={gearSetup}
-            onChange={(e) => setGearSetup(e)}
+            placeholder="请输入个人简介"
+            value={bio}
+            onChange={(e) => setBoi(e)}
           />
-          <div className="mb-[10px]">
+          {/* <div className="mb-[10px]">
             <UploadImgs
               count={1}
               path="gearSetupImg"
@@ -86,13 +82,13 @@ const GearSetup = ({ info, isMe, userId, update }: Props) => {
                 setGearSetupImg(url)
               }}
             />
-          </div>
+          </div> */}
           <Button color="primary" onClick={submitGearSetup}>
-            更新装备信息
+            更新简介
           </Button>
         </div>
       )}
     </>
   )
 }
-export default GearSetup
+export default Bio
