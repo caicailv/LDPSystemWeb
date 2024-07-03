@@ -6,6 +6,7 @@ import {
   openLoading,
   queryURLParams,
 } from '@/utils'
+import dynamic from 'next/dynamic'
 import { Collapse, ImageViewer } from 'antd-mobile'
 import { useRouter } from 'next/navigation'
 import './page.scss'
@@ -106,4 +107,4 @@ const RankTitle = ({ detail, index }: { detail: any; index: number }) => {
     </div>
   )
 }
-export default MapDetailPage
+export default dynamic(() => Promise.resolve(MapDetailPage), { ssr: false })
