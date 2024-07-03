@@ -17,13 +17,14 @@ export async function POST(req: NextRequest) {
 
   // 查询用户在 user_map_scores 表中的所有信息
   const [scores] = await pool.query(
-    'SELECT ums.*, maps.name as mapName FROM user_map_scores ums INNER JOIN maps ON ums.map_id = maps.id WHERE ums.user_id = ?',
+    'SELECT ums.*, maps.name as mapName,maps.route_length as route_length FROM user_map_scores ums INNER JOIN maps ON ums.map_id = maps.id WHERE ums.user_id = ?',
     [userId]
   )
 
   // 格式化结果
   let mapScores = (scores as any[]).reduce((acc, score) => {
     const map = acc.find((m: any) => m.mapName === score.mapName)
+    
     if (map) {
       map.list.push({
         duration: score.duration,
@@ -33,6 +34,7 @@ export async function POST(req: NextRequest) {
     } else {
       acc.push({
         mapName: score.mapName,
+        routeLength: score.route_length,
         list: [
           {
             duration: score.duration,

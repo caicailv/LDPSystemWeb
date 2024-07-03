@@ -15,6 +15,8 @@ import { useAsyncEffect } from 'ahooks'
 import { getMapRecordList } from '@/app/api/api'
 // import dayjs from 'dayjs'
 const MapDetailPage = () => {
+  const { id,name: mapName } = queryURLParams()
+
   const router = useRouter()
   const [list, setList] = useState<any[]>([])
   const [imgVisible, setImgVisible] = useState(false)
@@ -24,7 +26,7 @@ const MapDetailPage = () => {
     setImgVisible(true)
   }
   const getData = async () => {
-    const { id } = queryURLParams()
+    const { id,name: mapName } = queryURLParams()
     openLoading()
     const res = await getMapRecordList({ mapId: id })
     const data2 = (res.data || []).map((item: any) => {
@@ -44,6 +46,8 @@ const MapDetailPage = () => {
   }, [])
   return (
     <div className="map_detail_page">
+      <div className='text-center flex items-center h-[50px] justify-center text-[20px] mb-[20px]'>{mapName}排行榜</div>
+
       {list.length > 0 && (
         <Collapse defaultActiveKey={['1']}>
           {list.map((item, index) => (

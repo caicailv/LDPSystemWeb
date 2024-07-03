@@ -1,7 +1,5 @@
 'use client'
-import dynamic from 'next/dynamic';
-
-
+import dynamic from 'next/dynamic'
 
 import { useRouter } from 'next/navigation'
 import { Button, Input, Form, Toast } from 'antd-mobile'
@@ -20,7 +18,7 @@ const MapPage = () => {
   const getData = async () => {
     openLoading()
     const res = await getMapList()
-    
+
     console.log('res.data', res.data)
     setList(res.data)
     closeLoading()
@@ -38,7 +36,9 @@ const MapPage = () => {
           {list.map((item, index) => (
             <div
               className="list"
-              onClick={() => router.push('/map/detail?id=' + item.id)}
+              onClick={() =>
+                router.push('/map/detail?id=' + item.id + '&name=' + item.name)
+              }
               key={index}
             >
               {item.name}
@@ -63,5 +63,4 @@ const MapPage = () => {
   )
 }
 
-export default  dynamic(() => Promise.resolve(MapPage), { ssr: false });
-
+export default dynamic(() => Promise.resolve(MapPage), { ssr: false })

@@ -45,7 +45,7 @@ const UsersPage = () => {
     <div>
       <div className="user_container">
         {list.map((item, index) => (
-          <div className="user_item">
+          <div className="user_item" key={index}>
             <div
               className="text-[#1677ff] ellipsis w-[30%]  nickname"
               onClick={() => router.push(`/me?userId=${item.id}`)}

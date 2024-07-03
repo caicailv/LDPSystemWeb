@@ -14,6 +14,7 @@ import BaseInfo from './components/baseInfo'
 import EditBaseInfo from './components/editBaseInfo'
 import GearSetup from './components/gearSetup'
 import Bio from './components/bio'
+import LabelTitle from './components/labelTitle'
 
 const MePage = () => {
   // let { userId } = queryURLParams()
@@ -107,7 +108,7 @@ const MePage = () => {
           </div>
         )}
 
-        <div className="nickname ml-[20px] text-[20px]">{info.nickname}</div>
+        <div className="nickname ml-[20px] text-[20px] flex items-center ">{info.nickname} <LabelTitle info={info} /></div>
       </div>
       <div className="title text-[20px] mt-[20px]">基础信息</div>
 
